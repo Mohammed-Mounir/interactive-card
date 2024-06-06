@@ -1,0 +1,176 @@
+<div class="h-full flex items-center justify-center">
+  <form
+    [formGroup]="cardForm"
+    (ngSubmit)="onSubmit()"
+    class="flex flex-col gap-8 w-full"
+  >
+    <div class="flex flex-col gap-1">
+      <label
+        class="text-sm tracking-widest font-semibold uppercase"
+        for="cardholderName"
+        >Cardholder Name</label
+      >
+      <input
+        [ngClass]="
+          cardholderName?.invalid &&
+          (cardholderName?.dirty || cardholderName?.touched)
+            ? 'border-error'
+            : 'border-gray-200'
+        "
+        class="border outline-none rounded-lg p-2 px-4 placeholder:text-light-grayish-violet"
+        id="cardholderName"
+        type="text"
+        required
+        formControlName="cardholderName"
+        maxlength="27"
+        placeholder="e.g. Jane Appleseed"
+      />
+      @if(cardholderName?.invalid && (cardholderName?.dirty ||
+      cardholderName?.touched)) {
+      <div class="text-sm text-error">
+        @if(cardholderName?.errors?.['required']){
+        <p>Can't be blank</p>
+        } @else if(cardholderName?.errors?.['pattern']){
+        <p>Wrong format, alphabets only</p>
+        }
+      </div>
+      }
+    </div>
+
+    <div class="relative flex flex-col gap-1">
+      <label
+        class="text-sm tracking-widest font-semibold uppercase"
+        for="cardNumber"
+        >Card Number</label
+      >
+      <input
+        [ngClass]="
+          cardNumber?.invalid && (cardNumber?.dirty || cardNumber?.touched)
+            ? 'border-error'
+            : 'border-gray-200'
+        "
+        class="border outline-none rounded-lg p-2 px-4 placeholder:text-light-grayish-violet"
+        id="cardNumber"
+        type="text"
+        required
+        formControlName="cardNumber"
+        maxlength="19"
+        placeholder="e.g. 1234 5678 9123 0000"
+        appSplitString
+      />
+      @if(cardNumber?.invalid && (cardNumber?.dirty || cardNumber?.touched)) {
+      <div class="text-sm text-error">
+        @if(cardNumber?.errors?.['required']){
+        <p>Can't be blank</p>
+        } @else if(cardNumber?.errors?.['pattern']){
+        <p>Wrong format, numbers only</p>
+        }
+      </div>
+      }
+    </div>
+
+    <div class="flex gap-4 gap-y-1 flex-wrap">
+      <div class="w-0 grow flex flex-col gap-1">
+        <label
+          class="text-sm tracking-widest font-semibold uppercase flex flex-col"
+          >EXP. DATE (MM/YY)
+        </label>
+        <div class="flex gap-2">
+          <div class="flex flex-col gap-1">
+            <input
+              [ngClass]="
+                expDateInMonth?.invalid &&
+                (expDateInMonth?.dirty || expDateInMonth?.touched)
+                  ? 'border-error'
+                  : 'border-gray-200'
+              "
+              class="w-full border outline-none rounded-lg p-2 px-4 placeholder:text-light-grayish-violet"
+              type="text"
+              required
+              formControlName="expDateInMonth"
+              aria-label="EXP. DATE (MM/YY) start"
+              maxlength="2"
+              placeholder="MM"
+            />
+          </div>
+
+          <div class="flex flex-col gap-1">
+            <input
+              [ngClass]="
+                expDateInYear?.invalid &&
+                (expDateInYear?.dirty || expDateInYear?.touched)
+                  ? 'border-error'
+                  : 'border-gray-200'
+              "
+              class="w-full border outline-none rounded-lg p-2 px-4 placeholder:text-light-grayish-violet"
+              type="text"
+              required
+              formControlName="expDateInYear"
+              aria-label="EXP. DATE (MM/YY) end"
+              maxlength="2"
+              placeholder="YY"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="w-0 grow flex flex-col gap-1 md:w-full lg:w-0">
+        <label class="text-sm tracking-widest font-semibold uppercase" for="cvc"
+          >CVC</label
+        >
+        <input
+          [ngClass]="
+            cvc?.invalid && (cvc?.dirty || cvc?.touched)
+              ? 'border-error'
+              : 'border-gray-200'
+          "
+          class="border outline-none rounded-lg p-2 px-4 placeholder:text-light-grayish-violet"
+          id="cvc"
+          type="text"
+          required
+          formControlName="cvc"
+          maxlength="3"
+          placeholder="e.g. 123"
+        />
+      </div>
+
+      <div class="basis-full">
+        @if(expDateInMonth?.invalid && (expDateInMonth?.dirty ||
+        expDateInMonth?.touched)) {
+        <div class="text-sm text-error">
+          @if(expDateInMonth?.errors?.['required']){
+          <p>Can't be blank</p>
+          } @else if(expDateInMonth?.errors?.['pattern']){
+          <p>Wrong format, 2 digits month only</p>
+          }
+        </div>
+        } @if(expDateInYear?.invalid && (expDateInYear?.dirty ||
+        expDateInYear?.touched)) {
+        <div class="text-sm text-error">
+          @if(expDateInYear?.errors?.['required']){
+          <p>Can't be blank</p>
+          } @else if(expDateInYear?.errors?.['pattern']){
+          <p>Wrong format, 2 digits year only</p>
+          }
+        </div>
+        } @if(cvc?.invalid && (cvc?.dirty || cvc?.touched)) {
+        <div class="text-sm text-error">
+          @if(cvc?.errors?.['required']){
+          <p>Can't be blank</p>
+          } @else if(cvc?.errors?.['pattern']){
+          <p>Wrong format, 3 digits numbers only</p>
+          }
+        </div>
+        }
+      </div>
+    </div>
+
+    <button
+      class="bg-very-dark-violet py-3 text-white rounded-lg hover:bg-very-dark-violet/90"
+      type="submit"
+      [disabled]="!cardForm.valid"
+    >
+      Confirm
+    </button>
+  </form>
+</div>

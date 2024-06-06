@@ -1,0 +1,6 @@
+input:not(:has(.border-error)):focus,
+input:not(:has(.border-error)):active {
+  background: linear-gradient(white, white) padding-box,
+    linear-gradient(to right, hsl(249, 99%, 64%), hsl(278, 94%, 30%)) border-box;
+  border: 1px solid transparent;
+}
